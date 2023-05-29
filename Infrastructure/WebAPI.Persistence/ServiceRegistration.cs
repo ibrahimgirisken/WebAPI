@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Application.Abstractions;
 using WebAPI.Persistence.Concretes;
+using WebAPI.Persistence.Contexts;
 
 namespace WebAPI.Persistence
 {
@@ -14,7 +16,7 @@ namespace WebAPI.Persistence
        public static void AddPersistenceServices(
            this IServiceCollection services)
         {
-            services.AddSingleton<IProductService,ProductService>();
+            services.AddDbContext<WebAPIDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
         }
     }
 }
