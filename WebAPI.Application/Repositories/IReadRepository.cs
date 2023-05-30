@@ -11,33 +11,11 @@ namespace WebAPI.Application.Repositories
 {
     public interface IReadRepository<T>:IRepository<T> where T :BaseEntity
     {
-        public IQueryable<T> GetAll(bool tracking = true)
-        {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
-            return query;
-        }
-        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true)
-        {
-            var query = Table.Where(method);
-            if (!tracking)
-                query = query.AsNoTracking();
-            return query;
-        }
-        async Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true)
-        {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(method);
-        }
-        async Task<T> GetByIdAsync(string id, bool tracking = true)
-        {
-            var query = Table.AsQueryable();
-            if (!tracking)
-                query = query.AsNoTracking();
-            return await query.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
-        }
+        IQueryable<T> GetAll(bool tracking = true);
+
+        IQueryable<T> GetWhere(Expression<Func<T, bool>> method, bool tracking = true);
+
+        Task<T> GetSingleAsync(Expression<Func<T, bool>> method, bool tracking = true);
+        Task<T> GetByIdAsync(string id, bool tracking = true);
     }
 }
