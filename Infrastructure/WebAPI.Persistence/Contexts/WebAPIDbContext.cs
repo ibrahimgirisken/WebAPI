@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Domain.Entities;
+using WebAPI.Domain.Entities.Common;
 
 namespace WebAPI.Persistence.Contexts
 {
@@ -14,5 +15,19 @@ namespace WebAPI.Persistence.Contexts
         {
         }
         public DbSet<Product> Products { get; set; }
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            var datas=ChangeTracker.Entries<BaseEntity>();
+            foreach(var data in datas)
+            {
+                _ = data.State switch
+                {
+                    EntityState.Added => data.Entity.CreatedDate = DateTime.UtcNow,
+                    EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow
+                };
+           }
+            
+            return await base.SaveChangesAsync(cancellationToken);
+        }
     }
 }

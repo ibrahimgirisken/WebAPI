@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Repositories;
+using WebAPI.Domain.Entities;
 
 namespace WebAPI.API.Controllers
 {
@@ -35,6 +36,13 @@ namespace WebAPI.API.Controllers
         public async Task<IActionResult> getById(string id)
         {
            var response= await productReadRepository.GetByIdAsync(id);
+            return Ok(response);
+        }
+        [HttpPost]
+        public async Task<IActionResult> add(Product product)
+        {
+          var response= productWriteRepository.AddAsync(product);
+            await productWriteRepository.SaveAsync();
             return Ok(response);
         }
     }
