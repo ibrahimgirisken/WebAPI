@@ -40,24 +40,25 @@ namespace WebAPI.Persistence.Repositories
             return true;
         }
 
-        public Task<bool> RemoveAsync(string id)
+        public async Task<bool> RemoveAsync(string id)
         {
-            throw new NotImplementedException();
+            T model = await Table.FirstOrDefaultAsync(data => data.Id ==Guid.Parse(id));
+            return Remove(model);
         }
 
         public bool RemoveRange(List<T> datas)
         {
-            throw new NotImplementedException();
+            Table.RemoveRange(datas);
+            return true;
         }
 
-        public Task<int> SaveAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<int> SaveAsync()
+            =>await _context.SaveChangesAsync();
 
         public bool Update(T model)
         {
-            throw new NotImplementedException();
+            EntityEntry entityEntry =Table.Update(model);
+            return entityEntry.State == EntityState.Modified;
         }
     }
 }

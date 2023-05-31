@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Application.Abstractions;
 using WebAPI.Domain.Entities;
 
 namespace WebAPI.Persistence.Concretes
 {
-    public class ProductService : IProductService
+    public class ProductService
     {
         public List<Product> GetProduct()
         => new()

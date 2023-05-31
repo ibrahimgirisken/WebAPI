@@ -51,7 +51,6 @@ namespace WebAPI.Persistence.Repositories
         {
             var query = Table.Where(method);
             if (!tracking)
-
                 query = query.AsNoTracking();
             return query;
         }

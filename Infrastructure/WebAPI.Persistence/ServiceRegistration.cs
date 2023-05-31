@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Application.Abstractions;
-using WebAPI.Application.Repositories.Product;
+using WebAPI.Application.Repositories;
 using WebAPI.Persistence.Concretes;
 using WebAPI.Persistence.Contexts;
+using WebAPI.Persistence.Repositories;
 
 namespace WebAPI.Persistence
 {
@@ -18,7 +18,8 @@ namespace WebAPI.Persistence
            this IServiceCollection services)
         {
             services.AddDbContext<WebAPIDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
-            //services.AddScoped<IProductReadRepository, ProductReadRepository>();
+            services.AddScoped<IProductReadRepository, ProductReadRepository>();
+            services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
         }
     }
 }

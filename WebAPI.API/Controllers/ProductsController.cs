@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using WebAPI.Application.Abstractions;
+using WebAPI.Application.Repositories;
 
 namespace WebAPI.API.Controllers
 {
@@ -8,18 +8,34 @@ namespace WebAPI.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        private readonly IProductService _productService;
+        readonly private IProductReadRepository productReadRepository;
 
-        public ProductsController(IProductService productService)
+        readonly private IProductWriteRepository productWriteRepository;
+        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
         {
-            _productService = productService;
+            this.productReadRepository = productReadRepository;
+            this.productWriteRepository = productWriteRepository;
         }
 
+
         [HttpGet]
-        public IActionResult GetProducts()
+        public async Task get()
         {
-            var products = _productService.GetProduct();
-            return Ok(products);
+            await productWriteRepository.AddRangeAsync(new()
+            {
+                new(){Id=Guid.NewGuid(),Description="test-1",Name="Product-1",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-2",Name="Product-2",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-3",Name="Product-3",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-4",Name="Product-4",CreatedDate=DateTime.Now}
+            });
+            await productWriteRepository.SaveAsync();
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> getById(string id)
+        {
+           var response= await productReadRepository.GetByIdAsync(id);
+            return Ok(response);
         }
     }
 }
