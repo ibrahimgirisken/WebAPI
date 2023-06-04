@@ -36,14 +36,8 @@ namespace WebAPI.Persistence.Repositories
 
         public bool Remove(T model)
         {
-            Table.Remove(model);
-            return true;
-        }
-
-        public async Task<bool> RemoveAsync(string id)
-        {
-            T model = await Table.FirstOrDefaultAsync(data => data.Id ==Guid.Parse(id));
-            return Remove(model);
+           EntityEntry<T> entityEntry= Table.Remove(model);
+            return entityEntry.State==EntityState.Deleted;
         }
 
         public bool RemoveRange(List<T> datas)
@@ -52,13 +46,18 @@ namespace WebAPI.Persistence.Repositories
             return true;
         }
 
-        public async Task<int> SaveAsync()
-            =>await _context.SaveChangesAsync();
+        public async Task<bool> RemoveAsync(string id)
+        {
+            T model = await Table.FirstOrDefaultAsync(data => data.Id == Guid.Parse(id));
+            return Remove(model);
+        }
 
         public bool Update(T model)
         {
             EntityEntry entityEntry =Table.Update(model);
             return entityEntry.State == EntityState.Modified;
         }
+        public async Task<int> SaveAsync()
+            =>await _context.SaveChangesAsync();
     }
 }
