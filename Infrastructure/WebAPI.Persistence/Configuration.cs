@@ -14,10 +14,16 @@ namespace WebAPI.Persistence
             get
             {
                 ConfigurationManager configurationManager = new();
-                configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../WebAPI.API"));
-                configurationManager.AddJsonFile("appsettings.json");
-
-                return configurationManager.GetConnectionString("mssql");
+                try
+                {
+                    configurationManager.SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../WebAPI.API"));
+                    configurationManager.AddJsonFile("appsettings.json");
+                }
+                catch (Exception)
+                {
+                    configurationManager.AddJsonFile("appsettings.Production.json");
+                }
+                return configurationManager.GetConnectionString("MsSql");
             }
         }
     }

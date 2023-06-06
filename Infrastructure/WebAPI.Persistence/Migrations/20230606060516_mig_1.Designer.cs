@@ -12,7 +12,7 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    [Migration("20230529075444_mig_1")]
+    [Migration("20230606060516_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -41,6 +41,9 @@ namespace WebAPI.Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 

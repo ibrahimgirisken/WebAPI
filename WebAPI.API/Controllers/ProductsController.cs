@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Repositories;
+using WebAPI.Application.ViewModels.Products;
 using WebAPI.Domain.Entities;
 
 namespace WebAPI.API.Controllers
@@ -20,28 +21,27 @@ namespace WebAPI.API.Controllers
 
 
         [HttpGet]
-        public async Task get()
+        public async Task<IActionResult> getAll()
         {
-            await productWriteRepository.AddRangeAsync(new()
-            {
-                new(){Id=Guid.NewGuid(),Description="test-1",Name="Product-1",CreatedDate=DateTime.Now},
-                new(){Id=Guid.NewGuid(),Description="test-2",Name="Product-2",CreatedDate=DateTime.Now},
-                new(){Id=Guid.NewGuid(),Description="test-3",Name="Product-3",CreatedDate=DateTime.Now},
-                new(){Id=Guid.NewGuid(),Description="test-4",Name="Product-4",CreatedDate=DateTime.Now}
-            });
-            await productWriteRepository.SaveAsync();
+            var response = productReadRepository.GetAll();
+            return Ok(response);
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> getById(string id)
         {
-           var response= await productReadRepository.GetByIdAsync(id);
+            var response = await productReadRepository.GetByIdAsync(id);
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> add(Product product)
+        public async Task<IActionResult> add(VM_Create_Product model)
         {
-          var response= productWriteRepository.AddAsync(product);
+            Product responseProduct = new Product
+            {
+                Name = model.Name,
+                Description = model.Description
+            };
+            var response = await productWriteRepository.AddAsync(responseProduct);
             await productWriteRepository.SaveAsync();
             return Ok(response);
         }
