@@ -10,38 +10,39 @@ namespace WebAPI.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        readonly private IProductReadRepository productReadRepository;
+        readonly private IProductReadRepository _productReadRepository;
 
-        readonly private IProductWriteRepository productWriteRepository;
+        readonly private IProductWriteRepository _productWriteRepository;
         public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
         {
-            this.productReadRepository = productReadRepository;
-            this.productWriteRepository = productWriteRepository;
+            this._productReadRepository = productReadRepository;
+            this._productWriteRepository = productWriteRepository;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> getAll()
+        public async Task get()
         {
-            var response = productReadRepository.GetAll();
-            return Ok(response);
+            await productWriteRepository.AddRangeAsync(new()
+            {
+                new(){Id=Guid.NewGuid(),Description="test-1",Name="Product-1",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-2",Name="Product-2",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-3",Name="Product-3",CreatedDate=DateTime.Now},
+                new(){Id=Guid.NewGuid(),Description="test-4",Name="Product-4",CreatedDate=DateTime.Now}
+            });
+            await productWriteRepository.SaveAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> getById(string id)
         {
-            var response = await productReadRepository.GetByIdAsync(id);
+           var response= await productReadRepository.GetByIdAsync(id);
             return Ok(response);
         }
         [HttpPost]
-        public async Task<IActionResult> add(VM_Create_Product model)
+        public async Task<IActionResult> add(Product product)
         {
-            Product responseProduct = new Product
-            {
-                Name = model.Name,
-                Description = model.Description
-            };
-            var response = await productWriteRepository.AddAsync(responseProduct);
+          var response= productWriteRepository.AddAsync(product);
             await productWriteRepository.SaveAsync();
             return Ok(response);
         }
