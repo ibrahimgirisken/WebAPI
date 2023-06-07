@@ -23,27 +23,27 @@ namespace WebAPI.API.Controllers
         [HttpGet]
         public async Task get()
         {
-            await productWriteRepository.AddRangeAsync(new()
+            await _productWriteRepository.AddRangeAsync(new()
             {
                 new(){Id=Guid.NewGuid(),Description="test-1",Name="Product-1",CreatedDate=DateTime.Now},
                 new(){Id=Guid.NewGuid(),Description="test-2",Name="Product-2",CreatedDate=DateTime.Now},
                 new(){Id=Guid.NewGuid(),Description="test-3",Name="Product-3",CreatedDate=DateTime.Now},
                 new(){Id=Guid.NewGuid(),Description="test-4",Name="Product-4",CreatedDate=DateTime.Now}
             });
-            await productWriteRepository.SaveAsync();
+            await _productWriteRepository.SaveAsync();
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> getById(string id)
         {
-           var response= await productReadRepository.GetByIdAsync(id);
+           var response= await _productReadRepository.GetByIdAsync(id);
             return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> add(Product product)
         {
-          var response= productWriteRepository.AddAsync(product);
-            await productWriteRepository.SaveAsync();
+          var response= _productWriteRepository.AddAsync(product);
+            await _productWriteRepository.SaveAsync();
             return Ok(response);
         }
     }
