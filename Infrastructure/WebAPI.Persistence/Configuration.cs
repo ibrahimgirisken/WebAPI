@@ -23,7 +23,7 @@ namespace WebAPI.Persistence
                 {
                     configurationManager.AddJsonFile("appsettings.Production.json");
                 }
-                return configurationManager.GetConnectionString("MsSql");
+                return configurationManager.GetConnectionString("Mssql");
             }
         }
     }

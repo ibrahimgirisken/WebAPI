@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.Persistence", "Infra
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{A7896D0F-4D4D-48E7-B7BD-D54273B354B1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAPI.API", "WebAPI.API\WebAPI.API.csproj", "{B0D8A830-3AFF-457A-B450-231190862028}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebAPI.API", "WebAPI.API\WebAPI.API.csproj", "{B0D8A830-3AFF-457A-B450-231190862028}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
