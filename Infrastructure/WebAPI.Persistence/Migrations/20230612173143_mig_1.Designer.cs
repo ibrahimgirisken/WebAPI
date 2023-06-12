@@ -12,7 +12,7 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    [Migration("20230607055513_mig_1")]
+    [Migration("20230612173143_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />

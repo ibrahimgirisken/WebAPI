@@ -24,7 +24,7 @@ namespace WebAPI.API.Controllers
         [HttpGet]
         public async Task<IActionResult> getAll()
         {
-          var data= _productReadRepository.GetAll();
+          var data=_productReadRepository.GetAll();
             return Ok(data);
         }
 
@@ -47,6 +47,14 @@ namespace WebAPI.API.Controllers
             );
           var result= await _productWriteRepository.SaveAsync();
             return Ok(result);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> delete(string id)
+        {
+            await _productWriteRepository.RemoveAsync(id);
+            await _productWriteRepository.SaveAsync();
+            return Ok();
         }
     }
 }
