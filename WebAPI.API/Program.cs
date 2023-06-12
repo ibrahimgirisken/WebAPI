@@ -7,12 +7,12 @@ using WebAPI.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistenceServices();
+builder.Services.AddCors(option =>
+option.AddDefaultPolicy(policy => policy.WithOrigins("https://localhost:7269", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddControllers(options=>options.Filters.Add<ValidationFilter>())
     .AddFluentValidation(configuration=>configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>()).ConfigureApiBehaviorOptions(options=>options.SuppressModelStateInvalidFilter=true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddCors(option =>
-option.AddDefaultPolicy(policy => policy.WithOrigins("https://localhost:7269", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
 
 var app = builder.Build();
 

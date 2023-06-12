@@ -41,11 +41,12 @@ namespace WebAPI.API.Controllers
                 new()
                 {
                     Name = model.Name,
-                    Description = model.Description
+                    Description = model.Description,
+                    CreatedDate=DateTime.Now
                 }
             );
-           await _productWriteRepository.SaveAsync();
-            return StatusCode((int)HttpStatusCode.Created);
+          var result= await _productWriteRepository.SaveAsync();
+            return Ok(result);
         }
     }
 }
