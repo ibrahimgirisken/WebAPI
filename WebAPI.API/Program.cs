@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using WebAPI.Application;
 using WebAPI.Application.Validators.Products;
 using WebAPI.Infrastructure.Filter;
 using WebAPI.Persistence;
@@ -7,6 +8,7 @@ using WebAPI.Persistence;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddPersistenceServices();
+builder.Services.AddApplicationServices();
 builder.Services.AddCors(option =>
 option.AddDefaultPolicy(policy => policy.WithOrigins("http://localhost:4200", "https://localhost:4200").AllowAnyHeader().AllowAnyMethod()));
 builder.Services.AddControllers(options=>options.Filters.Add<ValidationFilter>())

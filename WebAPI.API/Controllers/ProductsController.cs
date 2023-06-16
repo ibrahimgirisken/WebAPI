@@ -1,6 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using WebAPI.Application.Features.Commands.Product.CreateProduct;
+using WebAPI.Application.Features.Commands.Product.RemoveProduct;
+using WebAPI.Application.Features.Commands.Product.UpdateProduct;
+using WebAPI.Application.Features.Queries.Product.GetAllProduct;
+using WebAPI.Application.Features.Queries.Product.GetByIdProduct;
 using WebAPI.Application.Repositories;
 using WebAPI.Application.ViewModels.Products;
 using WebAPI.Domain.Entities;
@@ -14,46 +20,48 @@ namespace WebAPI.API.Controllers
         readonly private IProductReadRepository _productReadRepository;
 
         readonly private IProductWriteRepository _productWriteRepository;
-        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository)
+        readonly IMediator _mediator;
+        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMediator mediator = null)
         {
             this._productReadRepository = productReadRepository;
             this._productWriteRepository = productWriteRepository;
+            _mediator = mediator;
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> getAll()
+        public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductCommandRequest)
         {
-          var data=_productReadRepository.GetAll();
-            return Ok(data);
-        }
-
-        [HttpGet("{id}")]
-        public async Task<IActionResult> getById(string id)
-        {
-           var response= await _productReadRepository.GetByIdAsync(id);
+            GetAllProductQueryResponse response= await _mediator.Send(getAllProductCommandRequest);
             return Ok(response);
         }
-        [HttpPost]
-        public async Task<IActionResult> add(VM_Create_Product model)
+
+        [HttpGet("{Id}")]
+        public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
-           await _productWriteRepository.AddAsync(
-                new()
-                {
-                    Name = model.Name,
-                    Description = model.Description,
-                    CreatedDate=DateTime.Now
-                }
-            );
-          var result= await _productWriteRepository.SaveAsync();
-            return Ok(result);
+            GetByIdProductQueryResponse response= await _mediator.Send(getByIdProductQueryRequest);
+            return Ok(response);
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> delete(string id)
+        [HttpPost]
+        public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
         {
-            await _productWriteRepository.RemoveAsync(id);
-            await _productWriteRepository.SaveAsync();
+            CreateProductCommandResponse response= await _mediator.Send(createProductCommandRequest);
+            return Ok(response);
+        }
+        [HttpPut]
+
+        public async Task<IActionResult> Update(UpdateProductCommandRequest _updateProductCommandRequest)
+        {
+           UpdateProductCommandResponse response= await _mediator.Send(_updateProductCommandRequest);
+            return Ok(response);
+            
+        }
+
+        [HttpDelete("{Id}")]
+        public async Task<IActionResult> delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
+        {
+            await _mediator.Send(removeProductCommandRequest);
             return Ok();
         }
     }
