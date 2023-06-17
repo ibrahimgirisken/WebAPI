@@ -19,8 +19,7 @@ namespace WebAPI.Application.Features.Commands.ProductImageFile.UploadProductIma
 
         public Task<UploadProductImageCommandResponse> Handle(UploadProductImageCommandRequest request, CancellationToken cancellationToken)
         {
-            string uploadPath = Path.Combine(_webHostEnvirement.WebRootPath,"resource/product-images");
-            return null;
+            throw new NotImplementedException();
         }
     }
 }

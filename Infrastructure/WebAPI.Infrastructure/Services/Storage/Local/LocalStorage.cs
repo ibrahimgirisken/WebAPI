@@ -5,20 +5,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Application.Services;
+using WebAPI.Application.Abstractions.Storage.Local;
 
-namespace WebAPI.Infrastructure.Services
+namespace WebAPI.Infrastructure.Services.Storage.Local
 {
-    public class FileService : IFileService
+    public class LocalStorage : ILocalStorage
     {
         readonly IWebHostEnvironment _webHostEnvironment;
 
-        public FileService(IWebHostEnvironment webHostEnvironment)
+        public LocalStorage(IWebHostEnvironment webHostEnvironment)
         {
             _webHostEnvironment = webHostEnvironment;
         }
 
-        public async Task<bool> CopyFileAsync(string path, IFormFile file)
+        public async Task DeleteAsync(string path, string fileName)
+           => File.Delete($"{path}\\{fileName}");
+
+        public List<string> GetFiles(string path)
+        {
+            DirectoryInfo directory = new(path);
+            return directory.GetFiles().Select(f => f.Name).ToList();
+        }
+
+        public bool HasFile(string path, string fileName)
+        => File.Exists($"{path}\\{fileName}");
+
+        async Task<bool> CopyFileAsync(string path, IFormFile file)
         {
             try
             {
@@ -35,34 +47,21 @@ namespace WebAPI.Infrastructure.Services
             }
         }
 
-        public Task<string> FileRenameAsync(string fileName)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<(string fileName, string path)>> UploadAsync(string path, IFormFileCollection files)
+        public async Task<List<(string fileName, string pathOrContainer)>> UploadAsync(string path, IFormFileCollection files)
         {
             string uploadPath = Path.Combine(_webHostEnvironment.WebRootPath, path);
             if (!Directory.Exists(uploadPath))
                 Directory.CreateDirectory(uploadPath);
 
-            List<(string fileName,string path)> datas = new();
-            List<bool> results = new();
-
+            List<(string fileName, string path)> datas = new();
             foreach (IFormFile file in files)
             {
-                string fileNewName = await FileRenameAsync(file.FileName);
-                await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
 
-                bool result=await CopyFileAsync($"{uploadPath}\\{fileNewName}", file);
-                datas.Add((fileNewName, $"{uploadPath}\\{fileNewName}"));
-                results.Add(result);
-
-                if (results.TrueForAll(r=>r.Equals(true)))
-                    return datas;
+                bool result = await CopyFileAsync($"{uploadPath}\\{file.Name}", file);
+                datas.Add((file.Name, $"{uploadPath}\\{file.Name}"));
             }
             //todo Eğer ki yukarıdaki if geçerli değilse burada dosyaların sunucuya yüklenirken hata alındığını burada uyarıcı bir exception fırlatılacak 
-            return null;
+            return datas;
         }
     }
 }

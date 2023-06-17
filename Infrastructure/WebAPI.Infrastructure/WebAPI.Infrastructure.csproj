@@ -10,4 +10,8 @@
     <ProjectReference Include="..\..\WebAPI.Application\WebAPI.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\Azure\" />
+  </ItemGroup>
+
 </Project>
