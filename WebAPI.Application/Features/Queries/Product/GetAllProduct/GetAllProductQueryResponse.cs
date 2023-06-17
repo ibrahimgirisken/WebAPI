@@ -8,6 +8,6 @@ namespace WebAPI.Application.Features.Queries.Product.GetAllProduct
 {
     public class GetAllProductQueryResponse
     {
-        public object Products { get; set; }
+        public object? Products { get; set; }
     }
 }

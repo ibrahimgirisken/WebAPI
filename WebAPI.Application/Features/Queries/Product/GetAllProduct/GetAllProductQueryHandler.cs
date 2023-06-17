@@ -20,6 +20,7 @@ namespace WebAPI.Application.Features.Queries.Product.GetAllProduct
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
             var products = _productReadRepository.GetAll(false);
+
             return new()
             {
                 Products = products

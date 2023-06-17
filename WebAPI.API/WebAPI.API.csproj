@@ -20,4 +20,8 @@
     <ProjectReference Include="..\WebAPI.Application\WebAPI.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
 </Project>

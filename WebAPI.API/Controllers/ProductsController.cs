@@ -5,6 +5,7 @@ using System.Net;
 using WebAPI.Application.Features.Commands.Product.CreateProduct;
 using WebAPI.Application.Features.Commands.Product.RemoveProduct;
 using WebAPI.Application.Features.Commands.Product.UpdateProduct;
+using WebAPI.Application.Features.Commands.ProductImageFile.UploadProductImage;
 using WebAPI.Application.Features.Queries.Product.GetAllProduct;
 using WebAPI.Application.Features.Queries.Product.GetByIdProduct;
 using WebAPI.Application.Repositories;
@@ -17,14 +18,10 @@ namespace WebAPI.API.Controllers
     [ApiController]
     public class ProductsController : ControllerBase
     {
-        readonly private IProductReadRepository _productReadRepository;
 
-        readonly private IProductWriteRepository _productWriteRepository;
         readonly IMediator _mediator;
-        public ProductsController(IProductReadRepository productReadRepository, IProductWriteRepository productWriteRepository, IMediator mediator = null)
+        public ProductsController(IMediator mediator = null)
         {
-            this._productReadRepository = productReadRepository;
-            this._productWriteRepository = productWriteRepository;
             _mediator = mediator;
         }
 
@@ -59,9 +56,16 @@ namespace WebAPI.API.Controllers
         }
 
         [HttpDelete("{Id}")]
-        public async Task<IActionResult> delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
+        public async Task<IActionResult> Delete([FromRoute] RemoveProductCommandRequest removeProductCommandRequest)
         {
             await _mediator.Send(removeProductCommandRequest);
+            return Ok();
+        }
+
+        [HttpPost("[action]")]
+        public async Task<IActionResult> Upload(UploadProductImageCommandRequest uploadProductImageCommandRequest)
+        {
+            await _mediator.Send(uploadProductImageCommandRequest);
             return Ok();
         }
     }
