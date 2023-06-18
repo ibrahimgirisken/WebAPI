@@ -17,6 +17,8 @@ namespace WebAPI.Infrastructure.Services.Storage
             _storage = storage;
         }
 
+        public string StorageName => _storage.GetType().Name;
+
         public Task DeleteAsync(string pathOrContainer, string fileName)
         => _storage.DeleteAsync(pathOrContainer,fileName);
 

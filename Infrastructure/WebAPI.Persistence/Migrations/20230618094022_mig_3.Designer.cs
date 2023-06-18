@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    partial class WebAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230618094022_mig_3")]
+    partial class mig_3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -118,10 +121,6 @@ namespace WebAPI.Persistence.Migrations
             modelBuilder.Entity("WebAPI.Domain.Entities.PdfFile", b =>
                 {
                     b.HasBaseType("WebAPI.Domain.Entities.File");
-
-                    b.Property<string>("PdfProductCode")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("PdfFile");
                 });
