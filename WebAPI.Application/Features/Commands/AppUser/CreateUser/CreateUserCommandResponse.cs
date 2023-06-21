@@ -8,7 +8,7 @@ namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandResponse
     {
-        public string Succeeded { get; set; }
+        public bool Succeeded { get; set; }
         public string Message { get; set; }
     }
 }

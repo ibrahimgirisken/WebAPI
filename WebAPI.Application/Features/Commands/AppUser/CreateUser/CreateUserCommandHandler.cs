@@ -1,17 +1,42 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Exceptions;
 
 namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
-        public Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+        readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+
+        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
         {
-            throw new NotImplementedException();
+            _userManager = userManager;
+        }
+
+        public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
+        {
+         IdentityResult identityResult= await _userManager.CreateAsync(new()
+            {
+                Id=Guid.NewGuid().ToString(),
+                UserName = request.UserName,
+                NameSurname = request.NameSurname,
+                Email = request.Email
+            });
+
+            if (identityResult.Succeeded)
+            {
+                return new()
+                {
+                    Message = "Kayıt başarılı",
+                    Succeeded = true
+                };
+            }
+            throw new UserCreatedFailedException();
         }
     }
 }

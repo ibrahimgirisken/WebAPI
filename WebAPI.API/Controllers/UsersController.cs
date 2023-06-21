@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.Features.Commands.AppUser.CreateUser;
 
 namespace WebAPI.API.Controllers
 {
@@ -15,10 +16,12 @@ namespace WebAPI.API.Controllers
             _mediator = mediator;
         }
 
-        public Task<IActionResult> Post()
+        [HttpPost]
+        public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)
         {
+           CreateUserCommandResponse response=await _mediator.Send(createUserCommandRequest);
 
-            return Ok();
+            return Ok(response);
             
         }
     }

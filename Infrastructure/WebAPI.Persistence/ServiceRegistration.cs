@@ -18,7 +18,16 @@ namespace WebAPI.Persistence
            this IServiceCollection services)
         {
             services.AddDbContext<WebAPIDbContext>(options => options.UseSqlServer(Configuration.ConnectionString));
-            services.AddIdentity<AppUser,AppRole>().AddEntityFrameworkStores<WebAPIDbContext>();
+            services.AddIdentity<AppUser, AppRole>(options =>
+            {
+                options.Password.RequiredLength = 3;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false; 
+                options.Password.RequireNonAlphanumeric = false;
+            })
+            
+            .AddEntityFrameworkStores<WebAPIDbContext>();
             services.AddScoped<IProductReadRepository, ProductReadRepository>();
             services.AddScoped<IProductWriteRepository, ProductWriteRepository>();
             services.AddScoped<ICategoryReadRepository,CategoryReadRepository>();
