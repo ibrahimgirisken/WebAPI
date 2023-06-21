@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,14 +7,16 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Domain.Entities;
 using WebAPI.Domain.Entities.Common;
+using WebAPI.Domain.Entities.Identity;
 
 namespace WebAPI.Persistence.Contexts
 {
-    public class WebAPIDbContext : DbContext
+    public class WebAPIDbContext : IdentityDbContext<AppUser,AppRole,string>
     {
         public WebAPIDbContext(DbContextOptions options) : base(options)
         {
         }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Domain.Entities.File> Files { get; set; }
