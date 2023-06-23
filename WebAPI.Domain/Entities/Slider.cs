@@ -9,9 +9,9 @@ namespace WebAPI.Domain.Entities
 {
     public class Slider:BaseEntity
     {
-        public string Name { get; set; }
-        public string Url { get; set; }
-        public string Description { get; set; }
+        public string? Name { get; set; }
+        public string? Url { get; set; }
+        public string? Description { get; set; }
         public int OrderNumber { get; set; }
         public bool Status { get; set; }
 

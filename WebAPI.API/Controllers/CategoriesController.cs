@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.Features.Queries.Category.GetAllCategory;
 using WebAPI.Application.Repositories;
 using WebAPI.Application.ViewModels.Category;
 
@@ -10,18 +12,20 @@ namespace WebAPI.API.Controllers
     {
         readonly ICategoryReadRepository _categoryReadRepository;
         readonly ICategoryWriteRepository _categoryWriteRepository;
+        readonly IMediator _mediator;
 
-        public CategoriesController(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository)
+        public CategoriesController(ICategoryReadRepository categoryReadRepository, ICategoryWriteRepository categoryWriteRepository, IMediator mediator = null)
         {
             _categoryReadRepository = categoryReadRepository;
             _categoryWriteRepository = categoryWriteRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(GetAllCategoryQueryRequest getAllCategoryQueryRequest)
         {
-            var data=_categoryReadRepository.GetAll();
-            return Ok(data);
+            GetAllCategoryQueryResponse response =await _mediator.Send(getAllCategoryQueryRequest);
+            return Ok(response);
         }
 
         [HttpPost]
