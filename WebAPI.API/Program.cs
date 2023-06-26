@@ -1,4 +1,6 @@
 using FluentValidation.AspNetCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WebAPI.Application;
 using WebAPI.Application.Validators.Products;
 using WebAPI.Infrastructure;
@@ -22,6 +24,19 @@ builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAuthentication("Admin").AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new()
+    {
+        ValidateAudience = true, //Oluşturulacak token değerini kimlerin/hangi orijinlerin/sitelerin belirlediği değerlerdir.
+        ValidateIssuer = true, // Oluşturulacak token değerinin kimin dağıttığını ifade edeceğimiz alandır. www.bisey.com
+        ValidateLifetime = true,// Oluşturulacak token değerinin süresini kontrol eder
+        ValidateIssuerSigningKey = true, //Üretilecek token değerinin uygulamamıza ait bir değer olduğunu ifade eden security key değeri doğrulamasıdır.
+        ValidAudience = builder.Configuration["Token:Audience"],
+        ValidIssuer = builder.Configuration["Token:Issuer"],
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Token:SecurityKey"]))
+    };
+});
 
 var app = builder.Build();
 

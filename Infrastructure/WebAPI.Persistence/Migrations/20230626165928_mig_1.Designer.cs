@@ -12,7 +12,7 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    [Migration("20230621091117_mig_1")]
+    [Migration("20230626165928_mig_1")]
     partial class mig_1
     {
         /// <inheritdoc />
@@ -179,15 +179,12 @@ namespace WebAPI.Persistence.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileName")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Path")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Storage")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

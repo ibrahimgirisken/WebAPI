@@ -24,9 +24,9 @@ namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
             {
                 Id=Guid.NewGuid().ToString(),
                 UserName = request.UserName,
-                NameSurname = request.NameSurname,
-                Email = request.Email
-            });
+                Email = request.Email,
+                NameSurname = request.NameSurname
+            },request.Password);
 
             if (identityResult.Succeeded)
             {
