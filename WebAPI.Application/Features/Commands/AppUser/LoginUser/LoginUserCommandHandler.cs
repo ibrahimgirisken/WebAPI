@@ -31,7 +31,7 @@ namespace WebAPI.Application.Features.Commands.AppUser.LoginUser
                 user = await _userManager.FindByEmailAsync(request.UserNameOrEmail);
 
             if (user == null)
-                throw new NotFoundUserException("Kullanıcı adı yada şifre hatalı!");
+                throw new NotFoundUserException();
 
             SignInResult result = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
             if (result.Succeeded)//Authentication başarılı !
@@ -43,7 +43,8 @@ namespace WebAPI.Application.Features.Commands.AppUser.LoginUser
                     Token = token
                 };
             }
-            throw new AuthenticationErrorException();
+             throw new AuthenticationErrorException();
+            
 
         }
     }
