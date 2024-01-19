@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Domain.Common.Result;
 
-namespace WebAPI.Application.Features.Commands.Product.CreateProduct
+namespace WebAPI.Domain.Common.Result
 {
-    public class CreateProductCommandResponse:IDataResult
+    public interface IDataResult
     {
         public string Message { get; set; }
         public bool IsSuccess { get; set; }

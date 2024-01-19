@@ -6,11 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Application.Repositories;
+using WebAPI.Domain.Common.Result;
+using WebAPI.Domain.Constants;
 using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application.Features.Commands.Product.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, IDataResult>
     {
         readonly IProductWriteRepository _productWriteRepository;
         readonly IMapper _mapper;
@@ -21,7 +23,7 @@ namespace WebAPI.Application.Features.Commands.Product.CreateProduct
             _mapper = mapper;
         }
 
-        public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<IDataResult> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
             List<ProductTranslations> productTranslations = _mapper.Map<List<ProductTranslations>>(request.Product.ProductTranslations);
             await _productWriteRepository.AddAsync(
@@ -41,7 +43,7 @@ namespace WebAPI.Application.Features.Commands.Product.CreateProduct
 
                 });
             await _productWriteRepository.SaveAsync();
-            return new();
+            return await Task.FromResult<IDataResult>(new SuccessResult(ResultMessages.Product_Added));
         }
     }
 }
