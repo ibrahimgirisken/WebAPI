@@ -22,8 +22,8 @@ namespace WebAPI.Application.Features.Commands.Product.CreateProduct
             await _productWriteRepository.AddAsync(
                 new()
                 {
-                    Name = request.Name,
-                    Description = request.Description,
+                    Status=request.Product.Status,
+                    UpdatedDate = DateTime.UtcNow,
                     CreatedDate = DateTime.UtcNow
 
                 });

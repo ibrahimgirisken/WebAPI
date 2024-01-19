@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.DTOs;
+using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application.Features.Commands.Product.CreateProduct
 {
     public class CreateProductCommandRequest:IRequest<CreateProductCommandResponse>
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public ProductDto Product { get; set; }
     }
 }

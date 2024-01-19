@@ -22,8 +22,7 @@ namespace WebAPI.Application.Features.Queries.Product.GetByIdProduct
             Domain.Entities.Product product= await _productReadRepository.GetByIdAsync(request.Id,false);
             return new()
             {
-                Name= product.Name,
-                Description= product.Description
+
             };
 
         }

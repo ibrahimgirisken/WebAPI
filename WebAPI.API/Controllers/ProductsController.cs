@@ -36,21 +36,21 @@ namespace WebAPI.API.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        public async Task<IActionResult> Get([FromBody] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response= await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(CreateProductCommandRequest createProductCommandRequest)
+        public async Task<IActionResult> Post([FromBody] CreateProductCommandRequest createProductCommandRequest)
         {
             CreateProductCommandResponse response= await _mediator.Send(createProductCommandRequest);
             return Ok(response);
         }
         [HttpPut]
 
-        public async Task<IActionResult> Update(UpdateProductCommandRequest _updateProductCommandRequest)
+        public async Task<IActionResult> Update([FromBody] UpdateProductCommandRequest _updateProductCommandRequest)
         {
            UpdateProductCommandResponse response= await _mediator.Send(_updateProductCommandRequest);
             return Ok(response);
