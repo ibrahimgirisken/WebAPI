@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory;
 using WebAPI.Application.Features.Queries.Category.GetAllCategory;
 using WebAPI.Application.Repositories;
 using WebAPI.Application.ViewModels.Category;
@@ -29,19 +30,9 @@ namespace WebAPI.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(VM_Create_Category model)
+        public async Task<IActionResult> Post([FromBody] CreateCategoryCommandRequest createCategoryCommandRequest)
         {
-           var response=await _categoryWriteRepository.AddAsync(
-               new()
-               {
-                   Name=model.Name,
-                   OrderNumber=model.OrderNumber,
-                   Status=model.Status,
-                   ParentId=model.ParentId,
-                   Url=model.Url
-               }
-               );
-            await _categoryWriteRepository.SaveAsync();
+            CreateCategoryCommandResponse response = await _mediator.Send(createCategoryCommandRequest);
             return Ok(response);
         }
     }

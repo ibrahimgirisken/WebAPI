@@ -15,7 +15,8 @@ namespace WebAPI.Application.MappingConfiguration
         {
             CreateMap<ProductTranslations, ProductTranslationsDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
-
+            CreateMap<CategoryTranslations, CategoryTranslationsDto>().ReverseMap();
+            CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }
 }

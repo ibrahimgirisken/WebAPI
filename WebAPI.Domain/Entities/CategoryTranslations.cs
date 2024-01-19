@@ -7,14 +7,14 @@ using WebAPI.Domain.Entities.Common;
 
 namespace WebAPI.Domain.Entities
 {
-    public class Category:BaseEntity
+    public class CategoryTranslations:BaseEntity
     {
         public string Name { get; set; }
-        public string Image1 { get; set; }
+        public string PageTitle { get; set; }
+        public string Content { get; set; }
         public string Url { get; set; }
-        public Guid? ParentId { get; set; }
-        public int OrderNumber { get; set; }
-        public bool Status { get; set; }
-        public ICollection<CategoryTranslations> Translations { get; set; }
+        public string LanguageCode { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
     }
 }
