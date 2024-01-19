@@ -11,6 +11,6 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetAllProduct
 {
     public class GetAllProductQueryResponse
     {
-        public List<Product> Products { get; set; }
+        public object Products { get; set; }
     }
 }
