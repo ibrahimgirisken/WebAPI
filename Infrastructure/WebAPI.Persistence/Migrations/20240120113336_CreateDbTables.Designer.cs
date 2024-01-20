@@ -12,8 +12,8 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    [Migration("20240119083152_AddProductColumns")]
-    partial class AddProductColumns
+    [Migration("20240120113336_CreateDbTables")]
+    partial class CreateDbTables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,10 @@ namespace WebAPI.Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Image1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +167,48 @@ namespace WebAPI.Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Entities.CategoryTranslations", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PageTitle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
+
+                    b.ToTable("CategoryTranslations");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.File", b =>
@@ -450,6 +496,17 @@ namespace WebAPI.Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("WebAPI.Domain.Entities.CategoryTranslations", b =>
+                {
+                    b.HasOne("WebAPI.Domain.Entities.Category", "Category")
+                        .WithMany("Translations")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("WebAPI.Domain.Entities.ProductTranslations", b =>
                 {
                     b.HasOne("WebAPI.Domain.Entities.Product", "Product")
@@ -459,6 +516,11 @@ namespace WebAPI.Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("WebAPI.Domain.Entities.Category", b =>
+                {
+                    b.Navigation("Translations");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Product", b =>

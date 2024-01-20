@@ -2,7 +2,6 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Text.Json;
 using WebAPI.Application.Repositories;
 using WebAPI.Domain.Entities;
 
@@ -12,6 +11,7 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetAllProduct
     {
         readonly IProductReadRepository _productReadRepository;
         readonly IMapper _mapper;
+
         public GetAllProductQueryHandler(IProductReadRepository productReadRepository, IMapper mapper)
         {
             _productReadRepository = productReadRepository;
@@ -20,14 +20,11 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetAllProduct
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            List<Product> products = _mapper.Map<List<Product>>(_productReadRepository.GetAll().Include(p=>p.Translations)).ToList();
-            var jsonResult = JsonSerializer.Serialize(products, new JsonSerializerOptions
-            {
-                WriteIndented = true // JSON'ı okunabilir hale getirmek için
-            });
+            List<Product> products = _mapper.Map<List<Product>>(_productReadRepository.GetAll()).ToList();
+
             return new()
             {
-                Products = jsonResult,
+                Products = products,
 
             };
         }

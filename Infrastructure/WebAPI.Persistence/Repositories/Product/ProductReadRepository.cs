@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,19 @@ namespace WebAPI.Persistence.Repositories
     {
         public ProductReadRepository(WebAPIDbContext context) : base(context)
         {
+        }
+
+        public IQueryable<Product> GetAllWithRelatedData(bool tracking = true)
+        {
+            var query = Table.AsQueryable();
+
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            // Include metodu ile ilişkili verileri sorguya dahil et
+            query = query.Include(p => p.Translations);
+
+            return query;
         }
     }
 }

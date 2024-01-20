@@ -31,6 +31,21 @@ namespace WebAPI.Persistence.Repositories
             return query;
         }
 
+        public IQueryable<T> GetAllWithRelatedData(bool tracking = true, params Expression<Func<T, object>>[] includeProperties)
+        {
+            var query = Table.AsQueryable();
+            if (!tracking)
+                query = query.AsNoTracking();
+
+            // İlişkili tabloyu (navigasyon property) sorguya dahil et
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return query;
+        }
+
         public async Task<T> GetByIdAsync(string id, bool tracking = true)
         {
             var query=Table.AsQueryable();

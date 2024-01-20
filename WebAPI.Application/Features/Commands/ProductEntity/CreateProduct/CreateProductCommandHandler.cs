@@ -12,7 +12,7 @@ using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
 {
-    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, IDataResult>
+    public class CreateProductCommandHandler : IRequestHandler<CreateProductCommandRequest, CreateProductCommandResponse>
     {
         readonly IProductWriteRepository _productWriteRepository;
         readonly IMapper _mapper;
@@ -23,7 +23,7 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
             _mapper = mapper;
         }
 
-        public async Task<IDataResult> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
             List<ProductTranslations> productTranslations = _mapper.Map<List<ProductTranslations>>(request.Product.ProductTranslations);
             await _productWriteRepository.AddAsync(
@@ -43,7 +43,7 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
 
                 });
             await _productWriteRepository.SaveAsync();
-            return await Task.FromResult<IDataResult>(new SuccessResult(ResultMessages.Product_Added));
+            return new() { IsSuccess = true, Message = "Kayıt başarılı!" };
         }
     }
 }
