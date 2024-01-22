@@ -7,6 +7,8 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.DTOs;
+using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application
 {
