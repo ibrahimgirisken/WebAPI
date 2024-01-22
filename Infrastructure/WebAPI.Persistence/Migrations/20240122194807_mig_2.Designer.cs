@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebAPI.Persistence.Contexts;
 
@@ -11,9 +12,11 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    partial class WebAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240122194807_mig_2")]
+    partial class mig_2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,6 +148,12 @@ namespace WebAPI.Persistence.Migrations
                         .HasColumnType("nvarchar")
                         .HasColumnName("image1");
 
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Name");
+
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int")
                         .HasColumnName("OrderNumber");
@@ -159,6 +168,12 @@ namespace WebAPI.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
+
+                    b.Property<string>("Url")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Url");
 
                     b.HasKey("Id");
 

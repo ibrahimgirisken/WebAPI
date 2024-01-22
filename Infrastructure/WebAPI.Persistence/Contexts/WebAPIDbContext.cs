@@ -80,6 +80,20 @@ namespace WebAPI.Persistence.Contexts
                 entity.Property(i => i.CreatedDate).HasColumnName("CreatedDate");
                 entity.Property(i => i.Url).HasColumnName("Url").HasColumnType("nvarchar").HasMaxLength(120);
             });
+
+            builder.Entity<Category>(entity =>
+            {
+                entity.ToTable(nameof(Category));
+                entity.Property(i => i.OrderNumber).HasColumnName("OrderNumber").HasColumnType("int");
+                entity.Property(i => i.Status).HasColumnName("Status");
+                entity.Property(i => i.Image1).HasColumnName("image1").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i => i.CreatedDate).HasColumnName("CreatedDate");
+                entity.Property(i => i.UpdatedDate).HasColumnName("UpdatedDate");
+                entity.HasMany(i => i.Translations)
+                .WithOne(i => i.Category)
+                .HasForeignKey(i => i.CategoryId)
+                .HasConstraintName("category_translation_id_fk");
+            });
         }
     }
 }

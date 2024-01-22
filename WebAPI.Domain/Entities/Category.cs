@@ -9,9 +9,7 @@ namespace WebAPI.Domain.Entities
 {
     public class Category:BaseEntity
     {
-        public string Name { get; set; }
         public string Image1 { get; set; }
-        public string Url { get; set; }
         public Guid? ParentId { get; set; }
         public int OrderNumber { get; set; }
         public bool Status { get; set; }

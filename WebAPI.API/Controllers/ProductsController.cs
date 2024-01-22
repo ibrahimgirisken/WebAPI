@@ -48,8 +48,8 @@ namespace WebAPI.API.Controllers
             CreateProductCommandResponse response= await _mediator.Send(createProductCommandRequest);
             return Ok(response);
         }
-        [HttpPut]
 
+        [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateProductCommandRequest _updateProductCommandRequest)
         {
            UpdateProductCommandResponse response= await _mediator.Send(_updateProductCommandRequest);

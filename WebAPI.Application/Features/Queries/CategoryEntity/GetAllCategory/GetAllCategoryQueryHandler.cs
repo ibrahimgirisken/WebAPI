@@ -1,26 +1,38 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.DTOs.CategoryDTOs;
+using WebAPI.Application.DTOs.ProductDTOs;
 using WebAPI.Application.Repositories;
+using WebAPI.Domain.Entities;
 
-namespace WebAPI.Application.Features.Queries.Category.GetAllCategory
+namespace WebAPI.Application.Features.Queries.CategoryEntity.GetAllCategory
 {
     public class GetAllCategoryQueryHandler : IRequestHandler<GetAllCategoryQueryRequest, GetAllCategoryQueryResponse>
     {
         readonly ICategoryReadRepository _categoryReadRepository;
+        readonly IMapper _mapper;
 
-        public GetAllCategoryQueryHandler(ICategoryReadRepository categoryReadRepository)
+        public GetAllCategoryQueryHandler(IMapper mapper, ICategoryReadRepository categoryReadRepository)
         {
+            _mapper = mapper;
             _categoryReadRepository = categoryReadRepository;
         }
 
-        public Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
         {
-            var categories = _categoryReadRepository.GetAll(false);
-            return null;
+            List<Category> categories = _categoryReadRepository.GetAll().Include(i => i.Translations).ToList();
+            List<CategoryGetAllDto> categoryDtos = _mapper.Map<List<CategoryGetAllDto>>(categories);
+
+            return new()
+            {
+                Categories = categories,
+            };
         }
     }
 }

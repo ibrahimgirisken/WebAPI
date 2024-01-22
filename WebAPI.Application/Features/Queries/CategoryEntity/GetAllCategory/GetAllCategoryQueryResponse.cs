@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAPI.Application.Features.Queries.Category.GetAllCategory
+namespace WebAPI.Application.Features.Queries.CategoryEntity.GetAllCategory
 {
     public class GetAllCategoryQueryResponse
     {

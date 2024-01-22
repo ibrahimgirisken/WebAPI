@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAPI.Application.Features.Queries.Category.GetByIdCategory
+namespace WebAPI.Application.Features.Queries.CategoryEntity.GetByIdCategory
 {
     public class GetByIdCategoryQueryResponse
     {

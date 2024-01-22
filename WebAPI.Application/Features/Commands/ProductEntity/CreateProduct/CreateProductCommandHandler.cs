@@ -43,7 +43,7 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
 
                 });
             await _productWriteRepository.SaveAsync();
-            return new() { IsSuccess = true, Message = "Kayıt başarılı!" };
+            return new() { IsSuccess = true, Message = ResultMessages.Product_Added };
         }
     }
 }

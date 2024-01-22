@@ -12,7 +12,7 @@ using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
 {
-    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, IDataResult>
+    public class CreateCategoryCommandHandler : IRequestHandler<CreateCategoryCommandRequest, CreateCategoryCommandResponse>
     {
         readonly ICategoryWriteRepository _categoryWriteRepository;
         readonly IMapper _mapper;
@@ -23,14 +23,13 @@ namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
             _mapper = mapper;
         }
 
-        public async Task<IDataResult> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
+        public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
             List<CategoryTranslations> categoryTranslations = _mapper.Map<List<CategoryTranslations>>(request.Category.CategoryTranslations);
             await _categoryWriteRepository.AddAsync(
                 new()
                 {
                     Image1=request.Category.Image1,
-                    Name=request.Category.Name,
                     OrderNumber=request.Category.OrderNumber,
                     Status=request.Category.Status,
                     CreatedDate=new DateTime(),
@@ -38,7 +37,7 @@ namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
                     Translations=categoryTranslations
                 });
             await _categoryWriteRepository.SaveAsync();
-            return await Task.FromResult<IDataResult>(new SuccessResult(ResultMessages.Category_Added));
+            return new() {IsSuccess=true,Message= ResultMessages.Category_Added };
         }
     }
 }

@@ -7,7 +7,7 @@ using WebAPI.Domain.Common.Result;
 
 namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
 {
-    public class CreateCategoryCommandResponse : IDataResult
+    public class CreateCategoryCommandResponse 
     {
         public string Message { get; set; }
         public bool IsSuccess { get; set; }
