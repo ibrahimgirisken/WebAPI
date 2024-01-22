@@ -17,6 +17,6 @@ namespace WebAPI.Application.DTOs
         public string Image5 { get; set; }
         public int OrderNumber { get; set; } = 1;
         public bool Status { get; set; }
-        public List<ProductTranslationGetAllDto> ProductTranslationGetAllDtos { get; set; }
+        public List<ProductTranslationGetAllDto> Translations { get; set; }
     }
 }

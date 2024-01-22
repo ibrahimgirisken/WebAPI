@@ -6,13 +6,17 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace WebAPI.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDbTables : Migration
+    public partial class mig_1 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.EnsureSchema(
+                name: "dbo");
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -27,6 +31,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -53,6 +58,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Categories",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -72,6 +78,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "Files",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -88,16 +95,17 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Products",
+                name: "Product",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image4 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image5 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image4 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image5 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -105,11 +113,12 @@ namespace WebAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Products", x => x.Id);
+                    table.PrimaryKey("PK_Product", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -124,6 +133,7 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -131,6 +141,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserClaims",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -145,6 +156,7 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserClaims_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -152,6 +164,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserLogins",
+                schema: "dbo",
                 columns: table => new
                 {
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -165,6 +178,7 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserLogins_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -172,6 +186,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserRoles",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -183,12 +198,14 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
                         column: x => x.RoleId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_AspNetUserRoles_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -196,6 +213,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "AspNetUserTokens",
+                schema: "dbo",
                 columns: table => new
                 {
                     UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
@@ -209,6 +227,7 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_AspNetUserTokens_AspNetUsers_UserId",
                         column: x => x.UserId,
+                        principalSchema: "dbo",
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -216,6 +235,7 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "CategoryTranslations",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -234,6 +254,7 @@ namespace WebAPI.Persistence.Migrations
                     table.ForeignKey(
                         name: "FK_CategoryTranslations_Categories_CategoryId",
                         column: x => x.CategoryId,
+                        principalSchema: "dbo",
                         principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -241,14 +262,15 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateTable(
                 name: "ProductTranslations",
+                schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LanguageCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    PageTitle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Content = table.Column<string>(type: "text", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    LanguageCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     ProductId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -257,20 +279,23 @@ namespace WebAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_ProductTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductTranslations_Products_ProductId",
+                        name: "product_translation_id_fk",
                         column: x => x.ProductId,
-                        principalTable: "Products",
+                        principalSchema: "dbo",
+                        principalTable: "Product",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
+                schema: "dbo",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
+                schema: "dbo",
                 table: "AspNetRoles",
                 column: "NormalizedName",
                 unique: true,
@@ -278,26 +303,31 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
+                schema: "dbo",
                 table: "AspNetUserClaims",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserLogins_UserId",
+                schema: "dbo",
                 table: "AspNetUserLogins",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserRoles_RoleId",
+                schema: "dbo",
                 table: "AspNetUserRoles",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
                 name: "EmailIndex",
+                schema: "dbo",
                 table: "AspNetUsers",
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
+                schema: "dbo",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true,
@@ -305,11 +335,13 @@ namespace WebAPI.Persistence.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_CategoryTranslations_CategoryId",
+                schema: "dbo",
                 table: "CategoryTranslations",
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ProductTranslations_ProductId",
+                schema: "dbo",
                 table: "ProductTranslations",
                 column: "ProductId");
         }
@@ -318,40 +350,52 @@ namespace WebAPI.Persistence.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
+                name: "AspNetRoleClaims",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
+                name: "AspNetUserClaims",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
+                name: "AspNetUserLogins",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
+                name: "AspNetUserRoles",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
+                name: "AspNetUserTokens",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "CategoryTranslations");
+                name: "CategoryTranslations",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Files");
+                name: "Files",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ProductTranslations");
+                name: "ProductTranslations",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "AspNetRoles",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "AspNetUsers",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Categories");
+                name: "Categories",
+                schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Product",
+                schema: "dbo");
         }
     }
 }

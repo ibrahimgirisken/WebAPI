@@ -17,7 +17,7 @@ namespace WebAPI.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(AuthenticationSchemes= "Admin")]
+
     public class ProductsController : ControllerBase
     {
 
@@ -28,7 +28,7 @@ namespace WebAPI.API.Controllers
         }
 
 
-        [HttpGet]
+        [HttpGet()]
         public async Task<IActionResult> Get([FromQuery] GetAllProductQueryRequest getAllProductCommandRequest)
         {
             GetAllProductQueryResponse response= await _mediator.Send(getAllProductCommandRequest);

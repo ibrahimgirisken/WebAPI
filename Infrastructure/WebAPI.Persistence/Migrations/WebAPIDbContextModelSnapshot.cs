@@ -17,6 +17,7 @@ namespace WebAPI.Persistence.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .HasDefaultSchema("dbo")
                 .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
@@ -44,7 +45,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
+                    b.ToTable("AspNetRoleClaims", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -69,7 +70,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
+                    b.ToTable("AspNetUserClaims", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
@@ -91,7 +92,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
+                    b.ToTable("AspNetUserLogins", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
@@ -106,7 +107,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
+                    b.ToTable("AspNetUserRoles", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -125,7 +126,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
+                    b.ToTable("AspNetUserTokens", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Category", b =>
@@ -163,7 +164,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.CategoryTranslations", b =>
@@ -205,7 +206,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("CategoryTranslations");
+                    b.ToTable("CategoryTranslations", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.File", b =>
@@ -232,7 +233,7 @@ namespace WebAPI.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Files");
+                    b.ToTable("Files", "dbo");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("File");
 
@@ -263,7 +264,7 @@ namespace WebAPI.Persistence.Migrations
                         .HasDatabaseName("RoleNameIndex")
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
+                    b.ToTable("AspNetRoles", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Identity.AppUser", b =>
@@ -332,7 +333,7 @@ namespace WebAPI.Persistence.Migrations
                         .HasDatabaseName("UserNameIndex")
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("AspNetUsers", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Product", b =>
@@ -342,44 +343,58 @@ namespace WebAPI.Persistence.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
 
                     b.Property<string>("Image1")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Image1");
 
                     b.Property<string>("Image2")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Image2");
 
                     b.Property<string>("Image3")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Image3");
 
                     b.Property<string>("Image4")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Image4");
 
                     b.Property<string>("Image5")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Image5");
 
                     b.Property<int>("OrderNumber")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("OrderNumber");
 
                     b.Property<string>("ProductCode")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("Status")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasColumnName("Status");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products");
+                    b.ToTable("Product", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.ProductTranslations", b =>
@@ -390,38 +405,49 @@ namespace WebAPI.Persistence.Migrations
 
                     b.Property<string>("Content")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("text")
+                        .HasColumnName("Content");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
 
                     b.Property<string>("LanguageCode")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("LanguageCode");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Name");
 
                     b.Property<string>("PageTitle")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("PageTitle");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(120)
+                        .HasColumnType("nvarchar")
+                        .HasColumnName("Url");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductTranslations");
+                    b.ToTable("ProductTranslations", "dbo");
                 });
 
             modelBuilder.Entity("WebAPI.Domain.Entities.PdfFile", b =>
@@ -510,7 +536,8 @@ namespace WebAPI.Persistence.Migrations
                         .WithMany("Translations")
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("product_translation_id_fk");
 
                     b.Navigation("Product");
                 });

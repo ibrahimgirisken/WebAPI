@@ -18,6 +18,6 @@ namespace WebAPI.Domain.Entities
 
         public int OrderNumber { get; set; } = 1;
         public bool Status { get; set; } 
-        public ICollection<ProductTranslations> Translations { get; set; }
+        public virtual ICollection<ProductTranslations> Translations { get; set; }
     }
 }

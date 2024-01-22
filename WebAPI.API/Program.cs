@@ -1,5 +1,6 @@
 using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Text;
@@ -9,6 +10,7 @@ using WebAPI.Infrastructure;
 using WebAPI.Infrastructure.Filter;
 using WebAPI.Infrastructure.Services.Storage.Local;
 using WebAPI.Persistence;
+using WebAPI.Persistence.Contexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +26,10 @@ builder.Services.AddControllers(options => options.Filters.Add<ValidationFilter>
     .AddFluentValidation(configuration => configuration.RegisterValidatorsFromAssemblyContaining<CreateProductValidator>())
     .ConfigureApiBehaviorOptions(options => options.SuppressModelStateInvalidFilter = true);
 
+builder.Services.AddDbContext<WebAPIDbContext>(options =>
+{
+    options.UseLazyLoadingProxies();
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {

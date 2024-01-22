@@ -25,7 +25,7 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
 
         public async Task<CreateProductCommandResponse> Handle(CreateProductCommandRequest request, CancellationToken cancellationToken)
         {
-            List<ProductTranslations> productTranslations = _mapper.Map<List<ProductTranslations>>(request.Product.ProductTranslations);
+            List<ProductTranslations> productTranslations = _mapper.Map<List<ProductTranslations>>(request.Product.Translations);
             await _productWriteRepository.AddAsync(
                 new()
                 {

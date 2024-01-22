@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
+using WebAPI.Application.DTOs;
 using WebAPI.Application.Repositories;
 using WebAPI.Domain.Entities;
 
@@ -20,11 +21,12 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetAllProduct
 
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
-            List<Product> products = _mapper.Map<List<Product>>(_productReadRepository.GetAll()).ToList();
+            List<Product> products=_productReadRepository.GetAll().Include(i=>i.Translations).ToList();
+            List<ProductGetAllDto> productDtos = _mapper.Map<List<ProductGetAllDto>>(products);
 
             return new()
             {
-                Products = products,
+                Products = productDtos,
 
             };
         }
