@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
-using WebAPI.Application.DTOs;
+using WebAPI.Application.DTOs.ProductDTOs;
 using WebAPI.Application.Repositories;
 using WebAPI.Domain.Entities;
 

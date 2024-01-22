@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebAPI.Application.DTOs;
+using WebAPI.Application.DTOs.CategoryDTOs;
+using WebAPI.Application.DTOs.ProductDTOs;
 using WebAPI.Domain.Entities;
 
 namespace WebAPI.Application.MappingConfiguration

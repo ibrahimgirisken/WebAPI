@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAPI.Domain.Entities;
 
-namespace WebAPI.Application.DTOs
+namespace WebAPI.Application.DTOs.ProductDTOs
 {
     public class ProductDto
     {

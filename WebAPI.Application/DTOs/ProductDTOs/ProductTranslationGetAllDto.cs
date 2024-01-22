@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAPI.Application.DTOs
+namespace WebAPI.Application.DTOs.ProductDTOs
 {
     public class ProductTranslationGetAllDto
     {
