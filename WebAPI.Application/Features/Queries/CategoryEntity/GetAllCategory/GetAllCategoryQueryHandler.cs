@@ -31,7 +31,7 @@ namespace WebAPI.Application.Features.Queries.CategoryEntity.GetAllCategory
 
             return new()
             {
-                Categories = categories,
+                Categories = categoryDtos,
             };
         }
     }

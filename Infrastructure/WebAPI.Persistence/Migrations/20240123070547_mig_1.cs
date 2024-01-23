@@ -57,14 +57,12 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Categories",
+                name: "Category",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    image1 = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     OrderNumber = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -73,7 +71,7 @@ namespace WebAPI.Persistence.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Categories", x => x.Id);
+                    table.PrimaryKey("PK_Category", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -252,10 +250,10 @@ namespace WebAPI.Persistence.Migrations
                 {
                     table.PrimaryKey("PK_CategoryTranslations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CategoryTranslations_Categories_CategoryId",
+                        name: "category_translation_id_fk",
                         column: x => x.CategoryId,
                         principalSchema: "dbo",
-                        principalTable: "Categories",
+                        principalTable: "Category",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -390,7 +388,7 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Categories",
+                name: "Category",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

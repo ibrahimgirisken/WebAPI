@@ -25,7 +25,7 @@ namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
 
         public async Task<CreateCategoryCommandResponse> Handle(CreateCategoryCommandRequest request, CancellationToken cancellationToken)
         {
-            List<CategoryTranslations> categoryTranslations = _mapper.Map<List<CategoryTranslations>>(request.Category.CategoryTranslations);
+            List<CategoryTranslations> categoryTranslations = _mapper.Map<List<CategoryTranslations>>(request.Category.Translations);
             await _categoryWriteRepository.AddAsync(
                 new()
                 {

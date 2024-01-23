@@ -12,8 +12,8 @@ using WebAPI.Persistence.Contexts;
 namespace WebAPI.Persistence.Migrations
 {
     [DbContext(typeof(WebAPIDbContext))]
-    [Migration("20240122194807_mig_2")]
-    partial class mig_2
+    [Migration("20240123070547_mig_1")]
+    partial class mig_1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -148,12 +148,6 @@ namespace WebAPI.Persistence.Migrations
                         .HasColumnType("nvarchar")
                         .HasColumnName("image1");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar")
-                        .HasColumnName("Name");
-
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int")
                         .HasColumnName("OrderNumber");
@@ -168,12 +162,6 @@ namespace WebAPI.Persistence.Migrations
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("UpdatedDate");
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasMaxLength(120)
-                        .HasColumnType("nvarchar")
-                        .HasColumnName("Url");
 
                     b.HasKey("Id");
 

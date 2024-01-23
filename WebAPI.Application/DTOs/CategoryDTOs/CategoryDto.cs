@@ -12,6 +12,6 @@ namespace WebAPI.Application.DTOs.CategoryDTOs
         public Guid? ParentId { get; set; }
         public int OrderNumber { get; set; }
         public bool Status { get; set; } = true;
-        public List<CategoryTranslationsDto> CategoryTranslations { get; set; }
+        public List<CategoryTranslationsDto> Translations { get; set; }
     }
 }
