@@ -22,7 +22,7 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetAllProduct
         public async Task<GetAllProductQueryResponse> Handle(GetAllProductQueryRequest request, CancellationToken cancellationToken)
         {
             List<Product> products=_productReadRepository.GetAll().Include(i=>i.Translations).ToList();
-            List<ProductGetAllDto> productDtos = _mapper.Map<List<ProductGetAllDto>>(products);
+            List<ProductListDto> productDtos = _mapper.Map<List<ProductListDto>>(products);
 
             return new()
             {

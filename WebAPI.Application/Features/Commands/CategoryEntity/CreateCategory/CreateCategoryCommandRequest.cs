@@ -10,6 +10,6 @@ namespace WebAPI.Application.Features.Commands.CategoryEntity.CreateCategory
 {
     public class CreateCategoryCommandRequest:IRequest<CreateCategoryCommandResponse>
     {
-        public CategoryDto Category{ get; set; }
+        public AddCategoryDto Category{ get; set; }
     }
 }

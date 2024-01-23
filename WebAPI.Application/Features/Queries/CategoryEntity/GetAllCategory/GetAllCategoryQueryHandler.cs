@@ -27,7 +27,7 @@ namespace WebAPI.Application.Features.Queries.CategoryEntity.GetAllCategory
         public async Task<GetAllCategoryQueryResponse> Handle(GetAllCategoryQueryRequest request, CancellationToken cancellationToken)
         {
             List<Category> categories = _categoryReadRepository.GetAll().Include(i => i.Translations).ToList();
-            List<CategoryGetAllDto> categoryDtos = _mapper.Map<List<CategoryGetAllDto>>(categories);
+            List<CategoryListDto> categoryDtos = _mapper.Map<List<CategoryListDto>>(categories);
 
             return new()
             {

@@ -11,6 +11,6 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
 {
     public class CreateProductCommandRequest:IRequest<CreateProductCommandResponse>
     {
-        public ProductDto Product { get; set; }
+        public AddProductDto Product { get; set; }
     }
 }
