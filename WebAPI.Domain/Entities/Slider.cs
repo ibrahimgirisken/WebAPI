@@ -9,11 +9,12 @@ namespace WebAPI.Domain.Entities
 {
     public class Slider:BaseEntity
     {
-        public string? Name { get; set; }
-        public string? Url { get; set; }
-        public string? Description { get; set; }
+        public string Image1 { get; set; }
+        public string Image2 { get; set; }
+        public string Image3 { get; set; }
         public int OrderNumber { get; set; }
-        public bool Status { get; set; }
+        public bool Status { get; set; } = true;
+        public virtual ICollection<SliderTranslations> Translations { get; set; }
 
     }
 }

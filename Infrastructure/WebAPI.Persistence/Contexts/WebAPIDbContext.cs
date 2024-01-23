@@ -22,6 +22,14 @@ namespace WebAPI.Persistence.Contexts
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductTranslations> ProductTranslations { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<CategoryTranslations> CategoryTranslations { get; set; }
+
+        public DbSet<Blog> Blog { get; set; }
+        public DbSet<BlogTranslations> BlogTranslations { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<NewsTranslations> NewsTranslations { get; set; }
+        public DbSet<Slider> Sliders { get; set; }
+        public DbSet<SliderTranslations> SliderTranslations { get; set; }
         public DbSet<Domain.Entities.File> Files { get; set; }
         public DbSet<ProductImageFile> ProductImageFiles { get; set; }
         public DbSet<PdfFile> PdfFiles { get; set; }

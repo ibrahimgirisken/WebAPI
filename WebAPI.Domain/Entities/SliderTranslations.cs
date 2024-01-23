@@ -9,5 +9,10 @@ namespace WebAPI.Domain.Entities
 {
     public class SliderTranslations:BaseEntity
     {
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public string Content { get; set; }
+        public Slider Slider { get; set; }
+        public Guid SliderId { get; set; }
     }
 }

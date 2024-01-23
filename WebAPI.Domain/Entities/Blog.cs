@@ -14,5 +14,6 @@ namespace WebAPI.Domain.Entities
         public string Image3 { get; set; }
         public int OrderNumber { get; set; }
         public bool Status { get; set; } = true;
+        public virtual ICollection<BlogTranslations> Translations { get; set; }
     }
 }

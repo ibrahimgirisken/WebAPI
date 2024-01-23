@@ -15,5 +15,7 @@ namespace WebAPI.Domain.Entities
         public string MetaDescription { get; set; }
         public string PageTitle { get; set; }
         public string Content { get; set; }
+        public Blog Blog { get; set; }
+        public Guid BlogId { get; set; }
     }
 }
