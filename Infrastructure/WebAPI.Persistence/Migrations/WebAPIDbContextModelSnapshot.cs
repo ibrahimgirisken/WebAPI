@@ -340,6 +340,9 @@ namespace WebAPI.Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedDate");
@@ -391,6 +394,8 @@ namespace WebAPI.Persistence.Migrations
                         .HasColumnName("UpdatedDate");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.ToTable("Product", "dbo");
                 });
@@ -529,6 +534,18 @@ namespace WebAPI.Persistence.Migrations
                     b.Navigation("Category");
                 });
 
+            modelBuilder.Entity("WebAPI.Domain.Entities.Product", b =>
+                {
+                    b.HasOne("WebAPI.Domain.Entities.Category", "Category")
+                        .WithMany("Products")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("category_id_fk");
+
+                    b.Navigation("Category");
+                });
+
             modelBuilder.Entity("WebAPI.Domain.Entities.ProductTranslations", b =>
                 {
                     b.HasOne("WebAPI.Domain.Entities.Product", "Product")
@@ -543,6 +560,8 @@ namespace WebAPI.Persistence.Migrations
 
             modelBuilder.Entity("WebAPI.Domain.Entities.Category", b =>
                 {
+                    b.Navigation("Products");
+
                     b.Navigation("Translations");
                 });
 

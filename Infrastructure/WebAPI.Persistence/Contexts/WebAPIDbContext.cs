@@ -81,6 +81,7 @@ namespace WebAPI.Persistence.Contexts
                 entity.Property(i => i.Url).HasColumnName("Url").HasColumnType("nvarchar").HasMaxLength(120);
             });
 
+
             builder.Entity<Category>(entity =>
             {
                 entity.ToTable(nameof(Category));
@@ -93,6 +94,10 @@ namespace WebAPI.Persistence.Contexts
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId)
                 .HasConstraintName("category_translation_id_fk");
+                entity.HasMany(i => i.Products)
+                .WithOne(i => i.Category)
+                .HasForeignKey(i=>i.CategoryId)
+                .HasConstraintName("category_id_fk");
             });
         }
     }

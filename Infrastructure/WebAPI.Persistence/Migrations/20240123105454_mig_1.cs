@@ -93,28 +93,6 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Image1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Image2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Image3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Image4 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Image5 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    OrderNumber = table.Column<int>(type: "int", nullable: false),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 schema: "dbo",
                 columns: table => new
@@ -259,6 +237,36 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Product",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image4 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Image5 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.ForeignKey(
+                        name: "category_id_fk",
+                        column: x => x.CategoryId,
+                        principalSchema: "dbo",
+                        principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductTranslations",
                 schema: "dbo",
                 columns: table => new
@@ -338,6 +346,12 @@ namespace WebAPI.Persistence.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Product_CategoryId",
+                schema: "dbo",
+                table: "Product",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductTranslations_ProductId",
                 schema: "dbo",
                 table: "ProductTranslations",
@@ -388,11 +402,11 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Category",
+                name: "Product",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Product",
+                name: "Category",
                 schema: "dbo");
         }
     }

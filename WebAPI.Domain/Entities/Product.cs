@@ -17,7 +17,9 @@ namespace WebAPI.Domain.Entities
         public string Image5 { get; set; }
 
         public int OrderNumber { get; set; } = 1;
-        public bool Status { get; set; } 
+        public bool Status { get; set; }
+        public Guid CategoryId { get; set; }
+        public Category Category { get; set; }
         public virtual ICollection<ProductTranslations> Translations { get; set; }
     }
 }

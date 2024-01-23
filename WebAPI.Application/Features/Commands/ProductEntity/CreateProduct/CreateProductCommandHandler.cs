@@ -35,6 +35,7 @@ namespace WebAPI.Application.Features.Commands.ProductEntity.CreateProduct
                     Image3 = request.Product.Image3,
                     Image4 = request.Product.Image4,
                     Image5 = request.Product.Image5,
+                    CategoryId=request.Product.CategoryId,
                     OrderNumber=request.Product.OrderNumber,
                     Translations= productTranslations,
                     Status = request.Product.Status,
