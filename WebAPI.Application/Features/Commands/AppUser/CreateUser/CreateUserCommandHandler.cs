@@ -5,38 +5,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Abstractions.Services;
+using WebAPI.Application.DTOs.User;
 using WebAPI.Application.Exceptions;
 
 namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
 {
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
-        readonly UserManager<Domain.Entities.Identity.AppUser> _userManager;
+        readonly IUserService _userService;
 
-        public CreateUserCommandHandler(UserManager<Domain.Entities.Identity.AppUser> userManager)
+        public CreateUserCommandHandler(IUserService userService)
         {
-            _userManager = userManager;
+            _userService = userService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)
         {
-         IdentityResult identityResult= await _userManager.CreateAsync(new()
+
+          CreateUserResponse response=await _userService.CreateAsync(new()
             {
-                Id=Guid.NewGuid().ToString(),
                 UserName = request.UserName,
                 Email = request.Email,
-                NameSurname = request.NameSurname
-            },request.Password);
+                NameSurname=request.NameSurname,
+                Password = request.Password,
+                PasswordConfirm = request.PasswordConfirm
+            });
 
-            if (identityResult.Succeeded)
+            return new()
             {
-                return new()
-                {
-                    Message = "Kayıt başarılı",
-                    Succeeded = true
-                };
-            }
-            throw new UserCreatedFailedException();
+                Message = response.Message,
+                Succeeded = response.Succeeded,
+            };
         }
     }
 }
