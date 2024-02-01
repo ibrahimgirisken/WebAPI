@@ -36,6 +36,7 @@ namespace WebAPI.Persistence
             services.AddScoped<IPdfFileWriteRepository, PdfFileWriteRepository>();
             services.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
             services.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+
             services.AddScoped<IUserService,UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IInternalAuthentication, AuthService>();
