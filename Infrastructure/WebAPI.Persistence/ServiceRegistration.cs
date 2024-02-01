@@ -1,14 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using WebAPI.Application.Abstractions.Services;
+using WebAPI.Application.Abstractions.Services.Authentications;
 using WebAPI.Application.Repositories;
 using WebAPI.Domain.Entities.Identity;
 using WebAPI.Persistence.Contexts;
 using WebAPI.Persistence.Repositories;
+using WebAPI.Persistence.Services;
 
 namespace WebAPI.Persistence
 {
@@ -38,6 +36,10 @@ namespace WebAPI.Persistence
             services.AddScoped<IPdfFileWriteRepository, PdfFileWriteRepository>();
             services.AddScoped<IProductImageFileReadRepository, ProductImageFileReadRepository>();
             services.AddScoped<IProductImageFileWriteRepository, ProductImageFileWriteRepository>();
+            services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IInternalAuthentication, AuthService>();
+            services.AddScoped<IExternalAuthentication, AuthService>();
         }
     }
 }
