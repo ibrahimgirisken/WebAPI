@@ -23,7 +23,6 @@ namespace WebAPI.Persistence.Contexts
         public DbSet<ProductTranslations> ProductTranslations { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<CategoryTranslations> CategoryTranslations { get; set; }
-
         public DbSet<Blog> Blog { get; set; }
         public DbSet<BlogTranslations> BlogTranslations { get; set; }
         public DbSet<News> News { get; set; }
