@@ -10,5 +10,7 @@ namespace WebAPI.Application.Abstractions.Services
     public interface IUserService
     {
         Task<CreateUserResponse> CreateAsync(CreateUser model);
+        Task<List<ListUser>> GetAllUsersAsync(int page, int size);
+        int TotalUsersCount { get; }
     }
 }

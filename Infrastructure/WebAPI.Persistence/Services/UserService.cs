@@ -1,5 +1,6 @@
 ﻿using Azure.Core;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,8 @@ namespace WebAPI.Persistence.Services
             _userManager = userManager;
         }
 
+        public int TotalUsersCount => _userManager.Users.Count();
+
         public async Task<CreateUserResponse> CreateAsync(CreateUser model)
         {
             IdentityResult result = await _userManager.CreateAsync(new()
@@ -40,6 +43,24 @@ namespace WebAPI.Persistence.Services
                     response.Message += $"{error.Code} - {error.Description}\n";
 
             return response;
+        }
+
+        public async Task<List<ListUser>> GetAllUsersAsync(int page, int size)
+        {
+            var users = await _userManager.Users
+                   .Skip(page * size)
+                   .Take(size)
+                   .ToListAsync();
+
+            return users.Select(user => new ListUser
+            {
+                Id = user.Id,
+                Email = user.Email,
+                NameSurname = user.NameSurname,
+                TwoFactorEnabled = user.TwoFactorEnabled,
+                UserName = user.UserName
+
+            }).ToList();
         }
     }
 }
