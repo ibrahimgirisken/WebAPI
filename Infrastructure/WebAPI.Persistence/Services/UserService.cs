@@ -24,6 +24,20 @@ namespace WebAPI.Persistence.Services
 
         public int TotalUsersCount => _userManager.Users.Count();
 
+        public async Task<string[]> AssignRoleToUserAsync(string userId, string[] roles)
+        {
+            AppUser user=await _userManager.FindByIdAsync(userId);
+            if (user == null)
+                user = await _userManager.FindByNameAsync(userId);
+
+            if(user != null)
+            {
+                var userRoles = await _userManager.GetRolesAsync(user);
+                return userRoles.ToArray();
+            }
+            return new string[] { };
+        }
+
         public async Task<CreateUserResponse> CreateAsync(CreateUser model)
         {
             IdentityResult result = await _userManager.CreateAsync(new()
@@ -61,6 +75,20 @@ namespace WebAPI.Persistence.Services
                 UserName = user.UserName
 
             }).ToList();
+        }
+
+        public async Task<string[]> GetRolesToUser(string userIdOrName)
+        {
+            AppUser user=await _userManager.FindByIdAsync(userIdOrName);
+            if (user == null)
+                user = await _userManager.FindByNameAsync(userIdOrName);
+
+            if (user!=null)
+            {
+                var userRoles =await _userManager.GetRolesAsync(user);
+                return userRoles.ToArray();
+            }
+            return new string[]{ };
         }
     }
 }

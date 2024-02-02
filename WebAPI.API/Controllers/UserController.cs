@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using WebAPI.Application.Features.Commands.AppUser.AssignRoleToUser;
 using WebAPI.Application.Features.Commands.AppUser.CreateUser;
 using WebAPI.Application.Features.Queries.AppUser.GetAllUser;
 
@@ -28,6 +29,13 @@ namespace WebAPI.API.Controllers
         public async Task<IActionResult> Get([FromQuery] GetAllUserQueryRequest getAllUserQueryRequest)
         {
             GetAllUserQueryResponse response = await _mediator.Send(getAllUserQueryRequest);
+            return Ok(response);
+        }
+
+        [HttpPost("assign-role-to-user")]
+        public async Task<IActionResult> AssignRoleToUser(AssignRoleToUserCommandRequest assignRoleToUserCommandRequest)
+        {
+            AssignRoleToUserCommandResponse response = await _mediator.Send(assignRoleToUserCommandRequest);
             return Ok(response);
         }
     }

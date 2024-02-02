@@ -11,6 +11,8 @@ namespace WebAPI.Application.Abstractions.Services
     {
         Task<CreateUserResponse> CreateAsync(CreateUser model);
         Task<List<ListUser>> GetAllUsersAsync(int page, int size);
+        Task<string[]> AssignRoleToUserAsync(string userId, string[] roles);
+        Task<string[]> GetRolesToUser(string userIdOrName);
         int TotalUsersCount { get; }
     }
 }
