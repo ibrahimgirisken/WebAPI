@@ -31,11 +31,15 @@ namespace WebAPI.Persistence.Services
                 NameSurname = model.NameSurname
             }, model.Password);
             CreateUserResponse response = new() { Succeeded = result.Succeeded};
-            if (response.Succeeded)
+            if (result.Succeeded)
             {
                 response.Message = "Kullanıcı başarı ile oluşturulmuştur";
             }
-            throw new UserCreatedFailedException();
+            else
+                foreach (var error in result.Errors)
+                    response.Message += $"{error.Code} - {error.Description}\n";
+
+            return response;
         }
     }
 }

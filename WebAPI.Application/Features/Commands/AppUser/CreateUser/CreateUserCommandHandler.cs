@@ -1,13 +1,6 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using WebAPI.Application.Abstractions.Services;
 using WebAPI.Application.DTOs.User;
-using WebAPI.Application.Exceptions;
 
 namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
 {
@@ -25,11 +18,11 @@ namespace WebAPI.Application.Features.Commands.AppUser.CreateUser
 
           CreateUserResponse response=await _userService.CreateAsync(new()
             {
-                UserName = request.UserName,
                 Email = request.Email,
                 NameSurname=request.NameSurname,
                 Password = request.Password,
-                PasswordConfirm = request.PasswordConfirm
+                PasswordConfirm = request.PasswordConfirm,
+                UserName = request.UserName,
             });
 
             return new()
