@@ -18,15 +18,6 @@ namespace WebAPI.API.Controllers
             _mediator = mediator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> CreateUser(CreateUserCommandRequest createUserCommandRequest)
-        {
-           CreateUserCommandResponse response=await _mediator.Send(createUserCommandRequest);
-
-            return Ok(response);
-            
-        }
-
         [HttpPost("[action]")]
         public async Task<IActionResult> Login(LoginUserCommandRequest loginUserCommandRequest)
         {
@@ -34,11 +25,5 @@ namespace WebAPI.API.Controllers
             return Ok(response);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get([FromQuery] GetAllUserQueryRequest getAllUserQueryRequest)
-        {
-            GetAllUserQueryResponse response =await _mediator.Send(getAllUserQueryRequest);
-            return Ok(response);
-        }
     }
 }
