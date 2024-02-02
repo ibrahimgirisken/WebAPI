@@ -40,9 +40,5 @@ namespace WebAPI.API.Controllers
             return Ok(response);
         }
 
-        public async Task<IActionResult> GetRolesUser(GetRolesToUserQueryRequest getRolesToUserQueryRequest)
-        {
-
-        }
     }
 }
