@@ -21,4 +21,9 @@
     <ProjectReference Include="..\WebAPI.Domain\WebAPI.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\Commands\AppUser\FacebookLogin\" />
+    <Folder Include="Features\Commands\AppUser\GoogleLogin\" />
+  </ItemGroup>
+
 </Project>
