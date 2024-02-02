@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebAPI.Application.Features.Commands.AppUser.AssignRoleToUser;
 using WebAPI.Application.Features.Commands.AppUser.CreateUser;
 using WebAPI.Application.Features.Queries.AppUser.GetAllUser;
+using WebAPI.Application.Features.Queries.AppUser.GetAllUser.GetRolesToUser;
 
 namespace WebAPI.API.Controllers
 {
@@ -37,6 +38,11 @@ namespace WebAPI.API.Controllers
         {
             AssignRoleToUserCommandResponse response = await _mediator.Send(assignRoleToUserCommandRequest);
             return Ok(response);
+        }
+
+        public async Task<IActionResult> GetRolesUser(GetRolesToUserQueryRequest getRolesToUserQueryRequest)
+        {
+
         }
     }
 }

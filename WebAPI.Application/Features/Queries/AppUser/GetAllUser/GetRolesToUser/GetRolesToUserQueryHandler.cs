@@ -17,9 +17,13 @@ namespace WebAPI.Application.Features.Queries.AppUser.GetAllUser.GetRolesToUser
             _userService = userService;
         }
 
-        public Task<GetRolesToUserQueryResponse> Handle(GetRolesToUserQueryRequest request, CancellationToken cancellationToken)
+        public async Task<GetRolesToUserQueryResponse> Handle(GetRolesToUserQueryRequest request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var userRoles= await _userService.GetRolesToUser(request.UserId);
+            return new()
+            {
+                Roles = userRoles
+            };
         }
     }
 }
