@@ -4,14 +4,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Abstractions.Services;
 
 namespace WebAPI.Application.Features.Commands.Role.CreateRole
 {
     public class CreateRoleCommandHandler : IRequestHandler<CreateRoleCommandRequest, CreateRoleCommandResponse>
     {
-        Task<CreateRoleCommandResponse> IRequestHandler<CreateRoleCommandRequest, CreateRoleCommandResponse>.Handle(CreateRoleCommandRequest request, CancellationToken cancellationToken)
+        readonly IRoleService _roleService;
+
+        public CreateRoleCommandHandler(IRoleService roleService)
         {
-            throw new NotImplementedException();
+            _roleService = roleService;
+        }
+
+        async Task<CreateRoleCommandResponse> IRequestHandler<CreateRoleCommandRequest, CreateRoleCommandResponse>.Handle(CreateRoleCommandRequest request, CancellationToken cancellationToken)
+        {
+
+            var result = await _roleService.CreateRole(request.Name);
+            return new()
+            {
+                Succeeded=result
+            };
         }
     }
 }

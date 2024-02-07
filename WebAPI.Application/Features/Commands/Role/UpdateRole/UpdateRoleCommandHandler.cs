@@ -4,14 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Abstractions.Services;
 
 namespace WebAPI.Application.Features.Commands.Role.UpdateRole
 {
     public class UpdateRoleCommandHandler : IRequestHandler<UpdateRoleCommandRequest, UpdateRoleCommandResponse>
     {
-        public Task<UpdateRoleCommandResponse> Handle(UpdateRoleCommandRequest request, CancellationToken cancellationToken)
+        readonly IRoleService _roleService;
+
+        public UpdateRoleCommandHandler(IRoleService roleService)
         {
-            throw new NotImplementedException();
+            _roleService = roleService;
+        }
+
+        public async Task<UpdateRoleCommandResponse> Handle(UpdateRoleCommandRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _roleService.UpdateRole(request.Id,request.Name);
+            return new()
+            {
+                Succeeded = result
+            };
         }
     }
 }

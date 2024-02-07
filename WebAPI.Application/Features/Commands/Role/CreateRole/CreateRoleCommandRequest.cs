@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace WebAPI.Application.Features.Commands.Role.CreateRole
 {
-    internal class CreateRoleCommandRequest:IRequest<CreateRoleCommandResponse>
+    public class CreateRoleCommandRequest:IRequest<CreateRoleCommandResponse>
     {
+        public string Name { get; set; }
     }
 }

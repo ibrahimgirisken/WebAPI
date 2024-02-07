@@ -4,14 +4,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebAPI.Application.Abstractions.Services;
 
 namespace WebAPI.Application.Features.Commands.Role.DeleteRole
 {
     public class DeleteRoleCommandHandler : IRequestHandler<DeleteRoleCommandRequest, DeleteRoleCommandResponse>
     {
-        public Task<DeleteRoleCommandResponse> Handle(DeleteRoleCommandRequest request, CancellationToken cancellationToken)
+    readonly IRoleService _roleService;
+
+        public DeleteRoleCommandHandler(IRoleService roleService)
         {
-            throw new NotImplementedException();
+            this._roleService = roleService;
+        }
+
+        public async Task<DeleteRoleCommandResponse> Handle(DeleteRoleCommandRequest request, CancellationToken cancellationToken)
+        {
+            var result = await _roleService.DeleteRole(request.Id);
+            return new()
+            {
+                Succeeded = result
+            };
         }
     }
 }
