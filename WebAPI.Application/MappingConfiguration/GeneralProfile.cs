@@ -14,14 +14,14 @@ namespace WebAPI.Application.MappingConfiguration
     {
         public GeneralProfile()
         {
-            CreateMap<ProductTranslations, AddProductTranslationsDto>().ReverseMap();
-            CreateMap<ProductTranslations, ProductTranslationListDto>().ReverseMap();
             CreateMap<Product, AddProductDto>().ReverseMap();
             CreateMap<Product, ProductListDto>().ReverseMap();
+            CreateMap<ProductTranslations, AddProductTranslationsDto>().ReverseMap();
+            CreateMap<ProductTranslations, ProductTranslationListDto>().ReverseMap();
 
             CreateMap<Category, AddCategoryDto>().ReverseMap();
-            CreateMap<CategoryTranslations, AddCategoryTranslationsDto>().ReverseMap();
             CreateMap<Category, CategoryListDto>().ReverseMap();
+            CreateMap<CategoryTranslations, AddCategoryTranslationsDto>().ReverseMap();
             CreateMap<CategoryTranslations, CategoryTranslationsListDto>().ReverseMap();
         }
     }

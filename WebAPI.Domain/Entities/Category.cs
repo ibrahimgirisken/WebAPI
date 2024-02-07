@@ -13,7 +13,7 @@ namespace WebAPI.Domain.Entities
         public Guid? ParentId { get; set; }
         public int OrderNumber { get; set; }
         public bool Status { get; set; }
-        public virtual ICollection<CategoryTranslations> Translations { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<CategoryTranslations> Translations { get; set; }
     }
 }

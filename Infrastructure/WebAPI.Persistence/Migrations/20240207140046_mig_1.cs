@@ -57,6 +57,25 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Blog",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blog", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Category",
                 schema: "dbo",
                 columns: table => new
@@ -90,6 +109,44 @@ namespace WebAPI.Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Files", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "News",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Sliders",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Image1 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image2 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Image3 = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sliders", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -210,16 +267,44 @@ namespace WebAPI.Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "BlogTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BlogId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BlogTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_BlogTranslations_Blog_BlogId",
+                        column: x => x.BlogId,
+                        principalSchema: "dbo",
+                        principalTable: "Blog",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CategoryTranslations",
                 schema: "dbo",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LanguageCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    PageTitle = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(120)", maxLength: 120, nullable: false),
+                    LanguageCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
                     CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -242,7 +327,7 @@ namespace WebAPI.Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    ProductCode = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProductCode = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Image1 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Image2 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Image3 = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
@@ -262,6 +347,59 @@ namespace WebAPI.Persistence.Migrations
                         column: x => x.CategoryId,
                         principalSchema: "dbo",
                         principalTable: "Category",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NewsTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Brief = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MetaDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PageTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    NewsId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NewsTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NewsTranslations_News_NewsId",
+                        column: x => x.NewsId,
+                        principalSchema: "dbo",
+                        principalTable: "News",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SliderTranslations",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    SliderId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SliderTranslations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_SliderTranslations_Sliders_SliderId",
+                        column: x => x.SliderId,
+                        principalSchema: "dbo",
+                        principalTable: "Sliders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -340,10 +478,22 @@ namespace WebAPI.Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_BlogTranslations_BlogId",
+                schema: "dbo",
+                table: "BlogTranslations",
+                column: "BlogId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_CategoryTranslations_CategoryId",
                 schema: "dbo",
                 table: "CategoryTranslations",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NewsTranslations_NewsId",
+                schema: "dbo",
+                table: "NewsTranslations",
+                column: "NewsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Product_CategoryId",
@@ -356,6 +506,12 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo",
                 table: "ProductTranslations",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SliderTranslations_SliderId",
+                schema: "dbo",
+                table: "SliderTranslations",
+                column: "SliderId");
         }
 
         /// <inheritdoc />
@@ -382,6 +538,10 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "BlogTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "CategoryTranslations",
                 schema: "dbo");
 
@@ -390,7 +550,15 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "NewsTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "ProductTranslations",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "SliderTranslations",
                 schema: "dbo");
 
             migrationBuilder.DropTable(
@@ -402,7 +570,19 @@ namespace WebAPI.Persistence.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
+                name: "Blog",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "News",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
                 name: "Product",
+                schema: "dbo");
+
+            migrationBuilder.DropTable(
+                name: "Sliders",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

@@ -61,6 +61,8 @@ namespace WebAPI.Persistence.Contexts
             builder.Entity<Product>(entity =>
             {
                 entity.ToTable(nameof(Product));
+                entity.HasKey(i => i.Id);
+                entity.Property(i=>i.ProductCode).HasColumnName("ProductCode").HasColumnType("nvarchar").HasMaxLength(100);
                 entity.Property(i=>i.Image1).HasColumnName("Image1").HasColumnType("nvarchar").HasMaxLength(100);
                 entity.Property(i=>i.Image2).HasColumnName("Image2").HasColumnType("nvarchar").HasMaxLength(100);
                 entity.Property(i=>i.Image3).HasColumnName("Image3").HasColumnType("nvarchar").HasMaxLength(100);
@@ -79,6 +81,8 @@ namespace WebAPI.Persistence.Contexts
 
             builder.Entity<ProductTranslations>(entity =>
             {
+                entity.ToTable(nameof(ProductTranslations));
+                entity.HasKey(i => i.Id);
                 entity.Property(i => i.Name).HasColumnName("Name").HasColumnType("nvarchar").HasMaxLength(120);
                 entity.Property(i => i.Content).HasColumnName("Content").HasColumnType("text");
                 entity.Property(i => i.LanguageCode).HasColumnName("LanguageCode").HasColumnType("nvarchar").HasMaxLength(3);
@@ -92,19 +96,33 @@ namespace WebAPI.Persistence.Contexts
             builder.Entity<Category>(entity =>
             {
                 entity.ToTable(nameof(Category));
+                entity.HasKey(i => i.Id);   
                 entity.Property(i => i.OrderNumber).HasColumnName("OrderNumber").HasColumnType("int");
                 entity.Property(i => i.Status).HasColumnName("Status");
                 entity.Property(i => i.Image1).HasColumnName("image1").HasColumnType("nvarchar").HasMaxLength(120);
                 entity.Property(i => i.CreatedDate).HasColumnName("CreatedDate");
                 entity.Property(i => i.UpdatedDate).HasColumnName("UpdatedDate");
+
                 entity.HasMany(i => i.Translations)
                 .WithOne(i => i.Category)
                 .HasForeignKey(i => i.CategoryId)
                 .HasConstraintName("category_translation_id_fk");
+
                 entity.HasMany(i => i.Products)
                 .WithOne(i => i.Category)
                 .HasForeignKey(i=>i.CategoryId)
                 .HasConstraintName("category_id_fk");
+            });
+
+            builder.Entity<CategoryTranslations>(entity =>
+            {
+                entity.ToTable(nameof(CategoryTranslations));
+                entity.HasKey(i => i.Id);  
+                entity.Property(i=>i.Name).HasColumnName("Name").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i=>i.PageTitle).HasColumnName("PageTitle").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i=>i.Content).HasColumnName("Content").HasColumnType("nvarchar").HasMaxLength(1000);
+                entity.Property(i=>i.Url).HasColumnName("Url").HasColumnType("nvarchar").HasMaxLength(120);
+                entity.Property(i=>i.LanguageCode).HasColumnName("LanguageCode").HasColumnType("nvarchar").HasMaxLength(3);
             });
         }
     }

@@ -15,6 +15,6 @@ namespace WebAPI.Domain.Entities
         public string Url { get; set; }
         public string LanguageCode { get; set; }
         public Guid ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        public Product Product { get; set; }
     }
 }
