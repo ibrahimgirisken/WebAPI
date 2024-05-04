@@ -8,7 +8,6 @@ namespace WebAPI.Application.Features.Queries.ProductEntity.GetByIdProduct
 {
     public class GetByIdProductQueryResponse
     {
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public object Product { get; set; }
     }
 }

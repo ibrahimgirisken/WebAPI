@@ -36,7 +36,7 @@ namespace WebAPI.API.Controllers
         }
 
         [HttpGet("{Id}")]
-        public async Task<IActionResult> Get([FromBody] GetByIdProductQueryRequest getByIdProductQueryRequest)
+        public async Task<IActionResult> Get([FromRoute] GetByIdProductQueryRequest getByIdProductQueryRequest)
         {
             GetByIdProductQueryResponse response= await _mediator.Send(getByIdProductQueryRequest);
             return Ok(response);
