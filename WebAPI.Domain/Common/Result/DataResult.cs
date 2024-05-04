@@ -16,7 +16,6 @@ namespace WebAPI.Domain.Common.Result
         {
             Data = data;
         }
-
         public T Data { get; set; }
     }
 }
